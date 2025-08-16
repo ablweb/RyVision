@@ -1,3 +1,5 @@
+import bgImg from '../res/Glainimension.jpg';
+
 document.querySelectorAll('input[name="color"]').forEach(el => {
   el.addEventListener("change", () => {
     if (el.checked) {
@@ -17,7 +19,7 @@ function updateBackground() {
   if (style !== "cam") {
     const img = document.createElement("img");
     img.id = "background";
-    img.src = "./res/Glainimension.jpg";
+    img.src = bgImg;
     img.alt = "";
     document.body.appendChild(img);
   }
