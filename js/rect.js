@@ -1,7 +1,8 @@
-// cones-step1.js
-// import * as THREE from 'three';
-
 import * as THREE from 'three';
+
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
 
 const canvas = document.getElementById('overlay');
 
@@ -47,6 +48,13 @@ function projectToScreen(vec3) {
   return { x: (v.x + 1) * 0.5 * w, y: (1 - (v.y + 1) * 0.5) * h };
 }
 
+// ---- Effects ----
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const afterimage = new AfterimagePass();
+afterimage.uniforms['damp'].value = 0.85; // lower = longer trails
+composer.addPass(afterimage);
+
 // ---- cone factory (red + black silhouette outline) ----
 function makeCone() {
   const geom = new THREE.ConeGeometry(1, 2, 3); // smaller 3D
@@ -56,19 +64,44 @@ function makeCone() {
 
   // black edges
   const edgesGeom = new THREE.EdgesGeometry(geom);
-  const edgesMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+  const edgesMat = new THREE.LineBasicMaterial({ color: 0xeeeeee });
   const edges = new THREE.LineSegments(edgesGeom, edgesMat);
   cone.add(edges);
 
   // black outline via backface-scaled shell (gives thick edge)
-  const mBlack = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide });
+  const mBlack = new THREE.MeshBasicMaterial({ color: 0xeeeeee, side: THREE.BackSide });
   const outline = new THREE.Mesh(geom, mBlack);
-  outline.scale.set(1.02, 1.02, 1.02); // thickness
+  outline.scale.set(1.1, 1.1, 1.1); // thickness
   cone.add(outline);
 
   // random 3D rotation axis + speed
   cone.userData.rotAxis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
   cone.userData.rotSpeed = 0.03 + Math.random() * 0.03;
+
+  return cone;
+}
+
+function makeTeseract() {
+  const geom = new THREE.ConeGeometry(2, 2, 3); // smaller 3D
+  // red fill (darker)
+  const mRed = new THREE.MeshBasicMaterial({ color: 0x000000 });
+  const cone = new THREE.Mesh(geom, mRed);
+
+  // black edges
+  const edgesGeom = new THREE.EdgesGeometry(geom);
+  const edgesMat = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+  const edges = new THREE.LineSegments(edgesGeom, edgesMat);
+  cone.add(edges);
+
+  // black outline via backface-scaled shell (gives thick edge)
+  const mBlack = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.BackSide });
+  const outline = new THREE.Mesh(geom, mBlack);
+  outline.scale.set(1.05, 1.05, 1.05); // thickness
+  cone.add(outline);
+
+  // random 3D rotation axis + speed
+  cone.userData.rotAxis = new THREE.Vector3(0.4, 0.1, 0.5).normalize();
+  cone.userData.rotSpeed = 0.03;
 
   return cone;
 }
@@ -95,6 +128,9 @@ for (let i = 0; i < COUNT; i++) {
   cones.push(c);
 }
 
+const teser = makeTeseract();
+teser.position.set(0, 0, 0);
+scene.add(teser);
 
 // ---- dots ----
 //
@@ -166,6 +202,7 @@ function tick() {
     if (c.position.lengthSq() < 0.5 * 0.5) resetCone(c);
   }
 
+  teser.rotateOnAxis(teser.userData.rotAxis, teser.userData.rotSpeed);
   // draw
   renderer.render(scene, camera);
 
@@ -180,6 +217,8 @@ function tick() {
     const hs = HITBOX_PX;
     dctx.strokeRect(p.x - hs, p.y - hs, hs * 2, hs * 2);
   }
+
+  composer.render();
 }
 
 tick();

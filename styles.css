@@ -68,14 +68,14 @@ input[type="checkbox"]:checked {
     width: 100vw;
     height: 100vh;
     object-fit: cover; /* Ensures fullscreen without distortion */
+    z-index: 2;
     transform: scaleX(-1);
-    z-index: -1;
     filter: brightness(0.4) contrast(3.5);
 }
 
 #debug-panel {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     background: rgba(0, 0, 0, 0.6); /* Semi-transparent for visibility over video */
     color: var(--ui);
     padding: 10px;
