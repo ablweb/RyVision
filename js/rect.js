@@ -68,12 +68,6 @@ function makeCone() {
   const edges = new THREE.LineSegments(edgesGeom, edgesMat);
   cone.add(edges);
 
-  // black outline via backface-scaled shell (gives thick edge)
-  const mBlack = new THREE.MeshBasicMaterial({ color: 0xeeeeee, side: THREE.BackSide });
-  const outline = new THREE.Mesh(geom, mBlack);
-  outline.scale.set(1.1, 1.1, 1.1); // thickness
-  cone.add(outline);
-
   // random 3D rotation axis + speed
   cone.userData.rotAxis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
   cone.userData.rotSpeed = 0.03 + Math.random() * 0.03;
