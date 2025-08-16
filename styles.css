@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: black;
+}
+
+:root {
+  --ui: red;
+}
+
+/* CHECKBOX */
+input[type="checkbox"] {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--ui);
+  background: black;
+  cursor: pointer;
+  vertical-align: middle;
+}
+input[type="checkbox"]:checked {
+  background: var(--ui);
+  border: 1px solid black;
+}
+
+/* options */
+#option input[type="radio"]{
+  position:absolute;
+  opacity:0;
+  width:0;
+  height:0;
+}
+#option label.btn{
+  padding: 5px;
+  cursor:pointer;
+  user-select:none;
+}
+#option input[type="radio"]:checked + span::before{ content: "> "; }
+#option input[type="radio"]:checked + span::after{  content: " <"; }
+
+#webcam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Ensures fullscreen without distortion */
+    transform: scaleX(-1);
+    z-index: 1;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Ensures fullscreen without distortion */
+    transform: scaleX(-1);
+    z-index: 3;
+}
+
+#background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Ensures fullscreen without distortion */
+    transform: scaleX(-1);
+    z-index: -1;
+    filter: brightness(0.4) contrast(3.5);
+}
+
+#debug-panel {
+    position: absolute;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.6); /* Semi-transparent for visibility over video */
+    color: var(--ui);
+    padding: 10px;
+    font-family: monospace;
+    font-size: 14px;
+    max-width: 300px;
+}
