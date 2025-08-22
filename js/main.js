@@ -3,7 +3,9 @@ import { setupRenderer, setupScene, startAnimation, stopAnimation, updateConfig,
     rectState, score} from "./rect";
 
 //=================AUDIO=================//
-const BG_AUDIO = new Audio('/res/lain8bitserialQ.mp3');
+
+import lainAudio from './res/lain8bitserialQ.mp3';
+const BG_AUDIO = new Audio(lainAudio);
 BG_AUDIO.volume = 0.7;
 function toggleMusic(value) {
     if (value) {

@@ -3,6 +3,8 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
 
+import hit from './res/hit.mp3';
+
 // Internal variables
 let renderer, scene, camera, composer, dbg, dctx;
 let cones = [];
@@ -39,7 +41,7 @@ function createCone() {
 
     cone.userData.rotAxis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
     cone.userData.rotSpeed = 0.03 + Math.random() * 0.03;
-    cone.userData.speedMod = 0.5 + Math.random() * 0.6; // Speed variation up to 1.3x
+    cone.userData.speedMod = 0.5 + Math.random() * 0.4; // Speed variation up to 1.3x
 
     return cone;
 }
@@ -74,7 +76,7 @@ function resetCone(cone) {
     const toCenter = new THREE.Vector3().copy(cone.position).multiplyScalar(-1).normalize().multiplyScalar(CONFIG.SPEED * cone.userData.speedMod);
     cone.userData.vel = toCenter;
     if (rectState.audio) {
-        const hitAudio = new Audio('/res/hit.mp3');
+        const hitAudio = new Audio(hit);
         hitAudio.volume = 0.5;
         hitAudio.play();
     }
