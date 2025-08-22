@@ -3,7 +3,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
 
-import hit from './res/hit.mp3';
+import hit from '/res/hit.mp3';
 
 // Internal variables
 let renderer, scene, camera, composer, dbg, dctx;

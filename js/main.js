@@ -4,7 +4,7 @@ import { setupRenderer, setupScene, startAnimation, stopAnimation, updateConfig,
 
 //=================AUDIO=================//
 
-import lainAudio from './res/lain8bitserialQ.mp3';
+import lainAudio from '/res/lain8bitserialQ.mp3';
 const BG_AUDIO = new Audio(lainAudio);
 BG_AUDIO.volume = 0.7;
 function toggleMusic(value) {
