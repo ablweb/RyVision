@@ -1,218 +1,223 @@
 import * as THREE from 'three';
-
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
 
-const canvas = document.getElementById('overlay');
+// Internal variables
+let renderer, scene, camera, composer, dbg, dctx;
+let cones = [];
+let teseract;
+let animationId;
 
-// ---- renderer (transparent, above webcam) ----
-const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-renderer.setClearColor(0x000000, 0);
-renderer.setSize(window.innerWidth, window.innerHeight);
-Object.assign(renderer.domElement.style, {
-  position: 'absolute', inset: '0', zIndex: '5', pointerEvents: 'none'
-});
-document.body.appendChild(renderer.domElement);
-
-const screenWidth = renderer.domElement.clientWidth;
-const screenHeight = renderer.domElement.clientHeight;
-
-// ---- scene/camera ----
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  70, window.innerWidth / window.innerHeight, 0.1, 1000
-);
-camera.position.z = 12;
-
-// ---- debug 2D canvas for collision boxes ----
-const dbg = document.createElement('canvas');
-const dctx = dbg.getContext('2d');
-Object.assign(dbg.style, { position: 'absolute', inset: '0', zIndex: '3', pointerEvents: 'none' });
-document.body.appendChild(dbg);
-
-// ---- helpers ----
-const SIZE = () => {
-  const w = renderer.domElement.clientWidth;
-  const h = renderer.domElement.clientHeight;
-  if (dbg.width !== w || dbg.height !== h) { dbg.width = w; dbg.height = h; }
-  camera.aspect = w / h; camera.updateProjectionMatrix();
-  renderer.setSize(w, h, false);
+const CONFIG = {
+    COUNT: 12,
+    SPAWN_R: 18,
+    SPEED: 0.07
 };
-window.addEventListener('resize', SIZE);
-SIZE();
 
-function projectToScreen(vec3) {
-  const v = vec3.clone().project(camera);
-  const w = dbg.width, h = dbg.height;
-  return { x: (v.x + 1) * 0.5 * w, y: (1 - (v.y + 1) * 0.5) * h };
+export let score = 100;
+export const rectState = { debug: false, audio: false };
+
+function projectToScreen(pos) {
+    const v = pos.clone().project(camera);
+    return {
+        x: (v.x * 0.5 + 0.5) * dbg.width,
+        y: (-v.y * 0.5 + 0.5) * dbg.height
+    };
 }
 
-// ---- Effects ----
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-const afterimage = new AfterimagePass();
-afterimage.uniforms['damp'].value = 0.85; // lower = longer trails
-composer.addPass(afterimage);
+// Create cone mesh
+function createCone() {
+    const geom = new THREE.ConeGeometry(1, 2, 3);
+    const mRed = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    const cone = new THREE.Mesh(geom, mRed);
 
-// ---- cone factory (red + black silhouette outline) ----
-function makeCone() {
-  const geom = new THREE.ConeGeometry(1, 2, 3); // smaller 3D
-  // red fill (darker)
-  const mRed = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  const cone = new THREE.Mesh(geom, mRed);
+    const edgesGeom = new THREE.EdgesGeometry(geom);
+    const edgesMat = new THREE.LineBasicMaterial({ color: 0xeeeeee });
+    const edges = new THREE.LineSegments(edgesGeom, edgesMat);
+    cone.add(edges);
 
-  // black edges
-  const edgesGeom = new THREE.EdgesGeometry(geom);
-  const edgesMat = new THREE.LineBasicMaterial({ color: 0xeeeeee });
-  const edges = new THREE.LineSegments(edgesGeom, edgesMat);
-  cone.add(edges);
+    cone.userData.rotAxis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
+    cone.userData.rotSpeed = 0.03 + Math.random() * 0.03;
+    cone.userData.speedMod = 0.5 + Math.random() * 0.6; // Speed variation up to 1.3x
 
-  // random 3D rotation axis + speed
-  cone.userData.rotAxis = new THREE.Vector3(Math.random(), Math.random(), Math.random()).normalize();
-  cone.userData.rotSpeed = 0.03 + Math.random() * 0.03;
-
-  return cone;
+    return cone;
 }
 
-function makeTeseract() {
-  const geom = new THREE.ConeGeometry(2, 2, 3); // smaller 3D
-  // red fill (darker)
-  const mRed = new THREE.MeshBasicMaterial({ color: 0x000000 });
-  const cone = new THREE.Mesh(geom, mRed);
+// Create teseract mesh
+function createTeseract() {
+    const geom = new THREE.ConeGeometry(2, 2, 3);
+    const mRed = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    const cone = new THREE.Mesh(geom, mRed);
 
-  // black edges
-  const edgesGeom = new THREE.EdgesGeometry(geom);
-  const edgesMat = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-  const edges = new THREE.LineSegments(edgesGeom, edgesMat);
-  cone.add(edges);
+    const edgesGeom = new THREE.EdgesGeometry(geom);
+    const edgesMat = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+    const edges = new THREE.LineSegments(edgesGeom, edgesMat);
+    cone.add(edges);
 
-  // black outline via backface-scaled shell (gives thick edge)
-  const mBlack = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.BackSide });
-  const outline = new THREE.Mesh(geom, mBlack);
-  outline.scale.set(1.05, 1.05, 1.05); // thickness
-  cone.add(outline);
+    const mBlack = new THREE.MeshBasicMaterial({ color: 0x00ff00, side: THREE.BackSide });
+    const outline = new THREE.Mesh(geom, mBlack);
+    outline.scale.set(1.05, 1.05, 1.05);
+    cone.add(outline);
 
-  // random 3D rotation axis + speed
-  cone.userData.rotAxis = new THREE.Vector3(0.4, 0.1, 0.5).normalize();
-  cone.userData.rotSpeed = 0.03;
+    cone.userData.rotAxis = new THREE.Vector3(0.4, 0.1, 0.5).normalize();
+    cone.userData.rotSpeed = 0.03;
 
-  return cone;
+    return cone;
 }
 
-// ---- swarm ----
-const COUNT = 12;
-const SPAWN_R = 18;         // world units from center
-const SPEED = 0.07;         // toward center
-const HITBOX_PX = 60;       // small 2D collision box (half-size)
-const cones = [];
-
-function resetCone(c) {
-  const a = Math.random() * Math.PI * 2;
-  const r = SPAWN_R;
-  c.position.set(Math.cos(a) * r, Math.sin(a) * r, (Math.random() - 0.5) * 4);
-  const toCenter = new THREE.Vector3().copy(c.position).multiplyScalar(-1).normalize().multiplyScalar(SPEED);
-  c.userData.vel = toCenter;
-}
-
-for (let i = 0; i < COUNT; i++) {
-  const c = makeCone();
-  resetCone(c);
-  scene.add(c);
-  cones.push(c);
-}
-
-const teser = makeTeseract();
-teser.position.set(0, 0, 0);
-scene.add(teser);
-
-// ---- dots ----
-//
-// inside your three.js file
-const dots = []; // max 10
-const MAX_DOTS = 10;
-
-// initialize dots
-for (let i = 0; i < MAX_DOTS; i++) {
-  dots.push({ x: 0, y: 0, active: false }); // inactive until used
-}
-
-// update a dot position
-export function setDot(index, x, y) {
-  if (index < 0 || index >= MAX_DOTS) return;
-  dots[index].x = x;
-  dots[index].y = y;
-  dots[index].active = true;
-}
-
-// deactivate a dot
-export function clearDot(index) {
-  if (index < 0 || index >= MAX_DOTS) return;
-  dots[index].active = false;
-}
-
-// ---- 2D collision (screen-space AABB around projected center) ----
-// For now: AABB centered at the projected cone position. Debug drawn in yellow.
-
-function checkCollisions() {
-  for (const c of cones) {
-    const p = projectToScreen(c.position);
-    const hs = HITBOX_PX;
-
-    for (const d of dots) {
-      if (!d.active) continue;
-      const scaleX = screenWidth / canvas.width;   // 1920 / 640 = 3
-      const scaleY = screenHeight / canvas.height; // 1080 / 480 = 2.25
-
-      const dx = d.x * scaleX;
-      const dy = d.y * scaleY;
-
-      console.log("Dot position:", dx, dy);
-      console.log("CONE:", p.x, p.y);
-      if (
-        dx >= p.x - hs &&
-        dx <= p.x + hs &&
-        dy >= p.y - hs &&
-        dy <= p.y + hs
-      ) {
-        resetCone(c); // triangle hit
-        console.log("COLISION");
-        break; // no need to check other dots for this triangle
-      }
+// Reset cone position
+function resetCone(cone) {
+    const a = Math.random() * Math.PI * 2;
+    const r = CONFIG.SPAWN_R;
+    cone.position.set(Math.cos(a) * r, Math.sin(a) * r, (Math.random() - 0.5) * 4);
+    const toCenter = new THREE.Vector3().copy(cone.position).multiplyScalar(-1).normalize().multiplyScalar(CONFIG.SPEED * cone.userData.speedMod);
+    cone.userData.vel = toCenter;
+    if (rectState.audio) {
+        const hitAudio = new Audio('/res/hit.mp3');
+        hitAudio.volume = 0.5;
+        hitAudio.play();
     }
-  }
 }
 
-// ---- loop ----
-function tick() {
-  requestAnimationFrame(tick);
-
-  // move + rotate
-  for (const c of cones) {
-    c.position.add(c.userData.vel);
-    c.rotateOnAxis(c.userData.rotAxis, c.userData.rotSpeed);
-
-    // respawn if near center (world)
-    if (c.position.lengthSq() < 0.5 * 0.5) resetCone(c);
-  }
-
-  teser.rotateOnAxis(teser.userData.rotAxis, teser.userData.rotSpeed);
-  // draw
-  renderer.render(scene, camera);
-
-  checkCollisions();
-
-  // debug AABBs
-  dctx.clearRect(0, 0, dbg.width, dbg.height);
-  dctx.lineWidth = 3;
-  dctx.strokeStyle = 'yellow';
-  for (const c of cones) {
-    const p = projectToScreen(c.position);
-    const hs = HITBOX_PX;
-    dctx.strokeRect(p.x - hs, p.y - hs, hs * 2, hs * 2);
-  }
-
-  composer.render();
+// Handle window resize
+function handleResize() {
+    const w = renderer.domElement.clientWidth;
+    const h = renderer.domElement.clientHeight;
+    if (dbg.width !== w || dbg.height !== h) { 
+        dbg.width = w; 
+        dbg.height = h; 
+    }
+    camera.aspect = w / h; 
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
 }
 
-tick();
+// Animation loop
+function animate() {
+    animationId = requestAnimationFrame(animate);
+
+    // Move and rotate cones
+    for (const cone of cones) {
+        cone.position.add(cone.userData.vel);
+        cone.rotateOnAxis(cone.userData.rotAxis, cone.userData.rotSpeed);
+
+        if (cone.position.lengthSq() < 0.5 * 0.5) {
+            resetCone(cone);
+            score--;
+        }
+    }
+
+    // Rotate teseract
+    teseract.rotateOnAxis(teseract.userData.rotAxis, teseract.userData.rotSpeed);
+
+    dctx.clearRect(0, 0, dbg.width, dbg.height);
+    if (rectState.debug) {
+        dctx.clearRect(0, 0, dbg.width, dbg.height);
+        dctx.lineWidth = 3;
+        dctx.strokeStyle = "yellow";
+
+        for (const c of cones) {
+            const p = projectToScreen(c.position);
+            const hs = 45; // half-size in pixels, adjust as needed
+            dctx.strokeRect(p.x - hs, p.y - hs, hs * 2, hs * 2);
+        }
+    }
+
+    // Render
+    composer.render();
+}
+
+
+// Exported functions
+export function setupRenderer() {
+    // Create renderer
+    renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    Object.assign(renderer.domElement.style, {
+        position: 'absolute', 
+        inset: '0', 
+        zIndex: '5', 
+        pointerEvents: 'none'
+    });
+    document.body.appendChild(renderer.domElement);
+
+    // Create scene and camera
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 12;
+
+    // Create debug canvas
+    dbg = document.createElement('canvas');
+    dctx = dbg.getContext('2d');
+    Object.assign(dbg.style, { 
+        position: 'absolute', 
+        inset: '0', 
+        zIndex: '3',         // moved above renderer
+        pointerEvents: 'auto' // allow clicks
+    });
+    document.body.appendChild(dbg);
+
+    // click hit test (hs = 45)
+    dbg.addEventListener('click', (e) => {
+        const rect = dbg.getBoundingClientRect();
+        const mx = (e.clientX - rect.left) * (dbg.width / rect.width);
+        const my = (e.clientY - rect.top) * (dbg.height / rect.height);
+
+        for (const c of cones) {
+            const p = projectToScreen(c.position);
+            const hs = 45;
+            if (mx >= p.x - hs && mx <= p.x + hs && my >= p.y - hs && my <= p.y + hs) {
+                resetCone(c);
+                score++;
+                const gameInfo = document.getElementById("game-info");
+                gameInfo.textContent = "score: " + score;
+            }
+        }
+    });
+
+    // Setup effects composer
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    const afterimage = new AfterimagePass();
+    afterimage.uniforms['damp'].value = 0.85;
+    composer.addPass(afterimage);
+
+    // Setup resize handler
+    window.addEventListener('resize', handleResize);
+    handleResize();
+}
+
+export function setupScene() {
+    // Create cones
+    cones = [];
+    for (let i = 0; i < CONFIG.COUNT; i++) {
+        const cone = createCone();
+        resetCone(cone);
+        scene.add(cone);
+        cones.push(cone);
+    }
+
+    // Create teseract
+    teseract = createTeseract();
+    teseract.position.set(0, 0, 0);
+    scene.add(teseract);
+}
+
+export function startAnimation() {
+    if (!animationId) {
+        animate();
+    }
+}
+
+export function stopAnimation() {
+    if (animationId) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+}
+
+export function updateConfig(newConfig) {
+    Object.assign(CONFIG, newConfig);
+}

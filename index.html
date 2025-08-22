@@ -18,26 +18,17 @@
 </head>
 
 <body>
-    <video id="webcam" autoplay playsinline muted></video>
     <canvas id="overlay"></canvas>
+    <div id="background"></div>
     <div id="debug-panel">
-        <div id="webcam-debug"></div>
-        <br>
+        <div id="game-info">
+        </div>
         <div id="option">
-            DEBUG <input type="checkbox" name="debug">
-            <br><br>
-            COLOR :
-            <label class="btn"><input type="radio" name="color" value="red" checked><span>RED</span></label> |
-            <label class="btn"><input type="radio" name="color" value="greenyellow"><span>GREEN</span></label> |
-            <label class="btn"><input type="radio" name="color" value="blue"><span>BLUE</span></label>
-            <br><br>
-            STYLE :
-            <label class="btn"><input type="radio" name="style" value="cam" checked><span>CAM</span></label> |
-            <label class="btn"><input type="radio" name="style" value="void"><span>VOID</span></label>
         </div>
     </div>
+    <div id="bot-panel">
+    </div>
     <script type="module" src="./js/option.js"></script>
-    <script type="module" src="./js/webcame.js"></script>
     <script type="module" src="./js/rect.js"></script>
     <script type="module" src="./js/main.js"></script>
 </body>

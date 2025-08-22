@@ -1,77 +1,65 @@
-import { HandLandmarker, FilesetResolver } from '@mediapipe/tasks-vision';
+import { setupOption, setupCheckbox } from "./option";
+import { setupRenderer, setupScene, startAnimation, stopAnimation, updateConfig,
+    rectState, score} from "./rect";
 
-import { setDot, clearDot } from './rect.js'; // adjust path to your three.js file
-
-const video = document.getElementById('webcam');
-
-const canvas = document.getElementById('overlay');
-const ctx = canvas.getContext('2d');
-
-let handLandmarker;
-let runningMode = 'VIDEO';
-let lastVideoTime = -1;
-
-// Initialize HandLandmarker
-async function init() {
-    const vision = await FilesetResolver.forVisionTasks('/mediapipe/tasks-vision/wasm');
-    handLandmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: {
-            modelAssetPath: '/hand_landmarker.task',
-            delegate: 'GPU'
-        },
-        runningMode,
-        numHands: 2
-    });
-    video.addEventListener('loadeddata', detect);
-}
-
-init();
-
-function drawLandmarks(landmarksArray) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Step 1: draw detected landmarks
-    landmarksArray.forEach((landmarks, handIndex) => {
-        const point = landmarks[8]; // index finger tip
-        if (!point) return; // skip if not detected
-
-        const x = point.x * canvas.width;
-        const mirroredX = canvas.width - x;
-        const y = point.y * canvas.height;
-
-        ctx.fillStyle = 'black';
-        ctx.strokeStyle = 'white';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x, y, 10, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
-
-        // Step 2: activate dot
-        setDot(handIndex, mirroredX, y);
-    });
-}
-
-// Detect and log/draw landmarks
-async function detect() {
-    if (!handLandmarker) return;
-
-    const startTimeMs = performance.now();
-    if (lastVideoTime !== video.currentTime) {
-        lastVideoTime = video.currentTime;
-
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const results = handLandmarker.detectForVideo(video, startTimeMs);
-        if (results.landmarks && results.landmarks.length > 0) {
-            //console.log('Hand landmarks:', results.landmarks);
-            drawLandmarks(results.landmarks);
-        } else {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 2; i++) clearDot(i); // deactivate dots
-        }
+//=================AUDIO=================//
+const BG_AUDIO = new Audio('/res/lain8bitserialQ.mp3');
+BG_AUDIO.volume = 0.7;
+function toggleMusic(value) {
+    if (value) {
+        BG_AUDIO.play();
+        rectState.audio = true;
+    } else {
+        BG_AUDIO.pause();
+        rectState.audio = false;
     }
-
-    requestAnimationFrame(detect);
+    console.log("audio =", value);
 }
+setupCheckbox("audio", toggleMusic, false);
+
+
+//=================DEBUG=================//
+function toggleDebug(value) {
+    if (value) {
+        rectState.debug = true;
+    } else {
+        rectState.debug = false;
+    }
+    console.log("debug =", value);
+}
+setupCheckbox("debug", toggleDebug, false);
+
+
+//=================COLORS=================//
+const colors = {
+    "red": "red",
+    "green": "greenyellow",
+    "blue": "blue"
+};
+function updateColor(key) {
+    document.documentElement.style.setProperty("--ui", colors[key]);
+    console.log("color =", key);
+}
+setupOption("color", colors, updateColor, 0);
+
+
+//=================STYLES=================//
+const styles = {
+  "3th":  "style-3th",
+  "void": "style-void",
+};
+function updateStyle(key) {
+    const body = document.body;
+    Object.values(styles).forEach(cls => body.classList.remove(cls));
+    body.classList.add(styles[key]);
+    console.log("style =", key);
+}
+setupOption("style", styles, updateStyle, 0);
+
+
+//=================RECT INITIALIZATION=================//
+// Initialize the 3D renderer and scene
+updateConfig({ COUNT: 12, SPEED: 0.1 });
+setupRenderer();
+setupScene();
+startAnimation();
