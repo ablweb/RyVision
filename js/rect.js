@@ -107,6 +107,8 @@ function animate() {
         if (cone.position.lengthSq() < 0.5 * 0.5) {
             resetCone(cone);
             score--;
+            const gameInfo = document.getElementById("game-info");
+            gameInfo.textContent = "score: " + score;
         }
     }
 
@@ -156,7 +158,7 @@ export function setupRenderer() {
     Object.assign(dbg.style, { 
         position: 'absolute', 
         inset: '0', 
-        zIndex: '3',         // moved above renderer
+        zIndex: '3',           // moved above renderer
         pointerEvents: 'auto' // allow clicks
     });
     document.body.appendChild(dbg);

@@ -90,9 +90,6 @@ input[type="checkbox"]:checked {
     width: 100%;
 }
 
-body.style-void {
-    cursor: crosshair;
-}
 body.style-void #background {
     background-image: url("/res/Glainimension.jpg");
     filter: brightness(0.4)
