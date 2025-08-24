@@ -1,6 +1,6 @@
-import { setupOption, setupCheckbox } from "/daily/js/option";
+import { setupOption, setupCheckbox } from "./option";
 import { setupRenderer, setupScene, startAnimation, stopAnimation, updateConfig,
-    rectState, score} from "/daily/js/rect";
+    rectState, score} from "./rect";
 
 //=================AUDIO=================//
 
