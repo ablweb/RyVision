@@ -1,6 +1,6 @@
-import { setupOption, setupCheckbox } from "./option";
+import { setupOption, setupCheckbox } from "/js/option";
 import { setupRenderer, setupScene, startAnimation, stopAnimation, updateConfig,
-    rectState, score} from "./rect";
+    rectState, score} from "/js/rect";
 
 //=================AUDIO=================//
 

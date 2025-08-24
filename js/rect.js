@@ -1,7 +1,7 @@
-import * as THREE from 'three';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
+import * as THREE from '/three';
+import { EffectComposer } from '/three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from '/three/examples/jsm/postprocessing/RenderPass.js';
+import { AfterimagePass } from '/three/examples/jsm/postprocessing/AfterimagePass.js';
 
 import hit from '/res/hit.mp3';
 
