@@ -1,26 +1,7 @@
 {
-  "builds": [
-    {
-      "src": "**/*",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/about",
-      "dest": "/about/index.html"
-    },
-    {
-      "src": "/about/",
-      "dest": "/about/index.html"
-    },
-    {
-      "src": "/daily",
-      "dest": "/daily/index.html"
-    },
-    {
-      "src": "/daily/",
-      "dest": "/daily/index.html"
-    }
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/about", "destination": "/about.html" },
+    { "source": "/daily", "destination": "/daily.html" }
   ]
 }
