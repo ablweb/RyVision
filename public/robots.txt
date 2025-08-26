@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.thatonegame.com/sitemap.xml
+Sitemap: https://www.thatonegame.xyz/sitemap.xml
