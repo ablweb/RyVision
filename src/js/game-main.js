@@ -58,7 +58,6 @@ function updateStyle(key) {
 }
 setupOption("style", styles, updateStyle, 0);
 
-
 //=================RECT INITIALIZATION=================//
 // Initialize the 3D renderer and scene
 updateConfig({ COUNT: 12, SPEED: 0.1 });
