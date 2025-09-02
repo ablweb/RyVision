@@ -5,8 +5,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: new URL('./index.html', import.meta.url).pathname,
-        page2: new URL('./about.html', import.meta.url).pathname,
-        page3: new URL('./daily.html', import.meta.url).pathname,
+        about: new URL('./about.html', import.meta.url).pathname,
+        daily: new URL('./daily.html', import.meta.url).pathname,
+        gamedev: new URL('./gamedev.html', import.meta.url).pathname,
       },
     },
   },
