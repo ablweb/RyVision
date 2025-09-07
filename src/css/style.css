@@ -23,6 +23,15 @@ body {
 }
 
 header {
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("/res/banner.jpg");
+}
+
+header .content {
+    background-color: var(--fin2);
     padding: 2rem !important;
     text-align: center;
     display: flex;
@@ -46,8 +55,13 @@ header p {
 footer {
     display: flex;
     flex-direction: column;
-    margin: 0 1rem;
-    padding-bottom: 120px !important;
+    margin: 0 3rem;
+    padding-bottom: 100px !important;
+    gap: 0.5rem;
+}
+
+footer a {
+    margin: 0 1rem;;
 }
 
 nav {
@@ -171,9 +185,15 @@ section {
     display: flex;
     flex-direction: column;
     max-width: 1200px;
-    margin: 3rem auto;
+    margin: 3rem auto 0 auto;
     padding: 1rem;
 }
+
+section .long {
+    margin-left: 12%;
+    margin-right: 12%;
+}
+
 
 section .row {
     display: flex;
