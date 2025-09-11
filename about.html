@@ -16,123 +16,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About RyVision</title>
-    <meta name="description" content="About this static and open source website for AI entertainment.">
+    <meta name="description" content="Learn about RyVision's automated AI game creation system. Discover how our games are built autonomously without human input every 48 hours.">
     <link rel="stylesheet" href="/src/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="canonical" href="https://www.thatonegame.xyz/about">
 </head>
 
 <body>
-    <div id="content">
-        <header>
-            <div class="content">
-                <h1>RyVision</h1>
-                <p>
-                    Daily AI-generated webgame
-                </p>
-                <nav>
-                    <a href="/" target="">
-                        <i class="fa-solid fa-house"></i>
-                        home
-                    </a>
-                    <a href="/about" target="">
-                        <i class="fa-solid fa-circle-info"></i>
-                        About
-                    </a>
-                    <a href="/gamedev" target="">
-                        <i class="fa-solid fa-gamepad"></i>
-                        GameDev
-                    </a>
-                    <a href="https://x.com/AgenticSys" target="_blank">
-                        <i class="fa-brands fa-square-x-twitter"></i>
-                        X
-                    </a>
+    <div class="page-wrapper">
+        <header class="site-header" style="background-image: url(res/banner.jpg);">
+            <div class="header-container">
+                <img src="favicon.ico" alt="RyVision Logo" class="site-logo">
+                <h1 class="site-title">RyVision</h1>
+                <nav class="main-navigation">
+                    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-toggle">
+                    <label for="mobile-menu-toggle" class="mobile-menu-icon">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+                    <ul class="navigation-menu">
+                        <li>
+                            <a href="/" class="nav-link">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/about" class="nav-link nav-link--active">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/gamedev" class="nav-link">
+                                <i class="fa-solid fa-gamepad"></i>
+                                <span>GameDev</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/AgenticSys" target="_blank" class="nav-link external-link">
+                                <i class="fa-brands fa-square-x-twitter"></i>
+                                <span>X</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
-        <div class="grid">
-            <div>
-                <h3>About This Website</h3>
-                <p>
-                    RyVision is a static, open-source website hosted on GitHub at thatonegame.xyz. It acts as a
-                    prototype to test how AI can handle game creation without any human input. Scripts and an AI agent
-                    run the process, building and deploying new games on set schedules. Every two days, the AI creates a
-                    new mini-game from scratch. These games are lightweight and load quickly on any device. Players try
-                    to get the highest score possible, which appears on a global leaderboard. When the next mini-game
-                    starts, the old one gets replaced entirely, no access to previous games remains, and all scores from
-                    the last cycle are deleted. The site also includes a larger game that receives updates each week,
-                    growing with new features over time. This setup demonstrates AI's ability to manage tasks like
-                    writing code, creating visuals, and updating the site.<br><br>
-                    It demonstrates a fully automated system where scripts and AI handle every step of game
-                    creation, highlighting how artificial intelligence can streamline development while maintaining
-                    creativity and variety. The entire codebase is open-source on GitHub.
-                </p>
+
+        <main class="main-content">
+            <section class="about-grid">
+                <article class="about-section">
+                    <h2 class="section-title">About This Website</h2>
+                    <div class="section-content">
+                        <p>
+                            RyVision is a static, open-source website hosted on GitHub at thatonegame.xyz. It acts as a
+                            prototype to test how AI can handle game creation without any human input. Scripts and an AI agent
+                            run the process, building and deploying new games on set schedules. Every two days, the AI creates a
+                            new mini-game from scratch. These games are lightweight and load quickly on any device. Players try
+                            to get the highest score possible, which appears on a global leaderboard. When the next mini-game
+                            starts, the old one gets replaced entirely, no access to previous games remains, and all scores from
+                            the last cycle are deleted. The site also includes a larger game that receives updates each week,
+                            growing with new features over time. This setup demonstrates AI's ability to manage tasks like
+                            writing code, creating visuals, and updating the site.
+                        </p>
+                        <p>
+                            It demonstrates a fully automated system where scripts and AI handle every step of game
+                            creation, highlighting how artificial intelligence can streamline development while maintaining
+                            creativity and variety. The entire codebase is open-source on GitHub.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="about-section">
+                    <h2 class="section-title">Scoreboard System</h2>
+                    <div class="section-content">
+                        <p>
+                            The mini-game includes a global scoreboard that displays the top 10 scores. Players can appear
+                            multiple times, and their scores exist only until the next game is generated. Previous scores are
+                            published on X before being erased. This approach maintains a competitive but temporary leaderboard,
+                            keeping each game cycle fresh and encouraging repeated engagement.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="about-section">
+                    <h2 class="section-title">Game Dev</h2>
+                    <div class="section-content">
+                        <p>
+                            The RPG represents a longer-term AI-driven development project. Each week, the AI adds new content,
+                            mechanics, or systems, slowly building a more functional and immersive game world. The mini-game is
+                            simpler, but its completely autonomous creation process showcases the same principles of automation
+                            applied on a smaller scale. Together, these projects provide insight into how AI can be used for
+                            both rapid, lightweight content generation and slower, more complex game development.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="about-section">
+                    <h2 class="section-title">Automated System</h2>
+                    <div class="section-content">
+                        <p>
+                            RyVision leverages automation to create AI-generated mini-games with minimal human input. This
+                            streamlines development, cuts costs, and delivers fresh games every 2 days. Automation ensures
+                            consistent quality, rapid deployment, and scalability, showcasing AI's potential to revolutionize
+                            entertainment. By minimizing manual effort, we focus on innovation, setting a new standard for
+                            efficient, creative game design.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="about-section">
+                    <h2 class="section-title">Privacy and Data Policy</h2>
+                    <div class="section-content">
+                        <p>
+                            RyVision collects no personal data and stores none beyond temporary scoreboard scores entries,
+                            players username and score, which are erased when a new game is generated. The only cookies
+                            used may come from Google services for analytics or ads, as outlined in their policies. No
+                            other data is collected or stored, ensuring minimal privacy impact.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="about-section">
+                    <h2 class="section-title">Contact</h2>
+                    <div class="section-content">
+                        <p>Contact us on</p>
+                        <a href="https://x.com/AgenticSys" target="_blank" class="contact-link external-link">
+                            <i class="fa-brands fa-square-x-twitter"></i>
+                            <span>here</span>
+                        </a>
+                        <p>or email <a href="mailto:ryvisionxyz.contact@gmail.com" class="contact-link">ryvisionxyz.contact@gmail.com</a></p>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-content">
+                <h3 class="footer-title">Links:</h3>
+                <div class="footer-links">
+                    <span class="footer-email">ryvisionxyz.contact@gmail.com</span>
+                    <a href="https://x.com/AgenticSys" target="_blank" class="footer-link external-link">
+                        <i class="fa-brands fa-square-x-twitter"></i>
+                        <span>X</span>
+                    </a>
+                    <a href="/about" class="footer-link">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="/privacy-policy" class="footer-link">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Privacy Policy</span>
+                    </a>
+                </div>
             </div>
-            <div>
-                <h3>Scoreboard System</h3>
-                <p>
-                    The mini-game includes a global scoreboard that displays the top 10 scores. Players can appear
-                    multiple times, and their scores exist only until the next game is generated. Previous scores are
-                    published on X before being erased. This approach maintains a competitive but temporary leaderboard,
-                    keeping each game cycle fresh and encouraging repeated engagement.
-                </p>
-            </div>
-            <div>
-                <h3>Game Dev</h3>
-                <p>
-                    The RPG represents a longer-term AI-driven development project. Each week, the AI adds new content,
-                    mechanics, or systems, slowly building a more functional and immersive game world. The mini-game is
-                    simpler, but its completely autonomous creation process showcases the same principles of automation
-                    applied on a smaller scale. Together, these projects provide insight into how AI can be used for
-                    both rapid, lightweight content generation and slower, more complex game development.
-                </p>
-            </div>
-            <div>
-                <h3>Automated System</h3>
-                <p>
-                    RyVision leverages automation to create AI-generated mini-games with minimal human input. This
-                    streamlines development, cuts costs, and delivers fresh games every 2 days. Automation ensures
-                    consistent quality, rapid deployment, and scalability, showcasing AI’s potential to revolutionize
-                    entertainment. By minimizing manual effort, we focus on innovation, setting a new standard for
-                    efficient, creative game design.
-                </p>
-            </div>
-            <div>
-                <h3>Privacy and Data Policy</h3>
-                <p>
-                    RyVision collects no personal data and stores none beyond temporary scoreboard scores entries,
-                    players username and score, which are erased when a new game is generated. The only cookies
-                    used may come from Google services for analytics or ads, as outlined in their policies. No
-                    other data is collected or stored, ensuring minimal privacy impact.
-                </p>
-            </div>
-            <div>
-                <h3>Contact</h3>
-                <p>Contact us on</p>
-                <a href="https://x.com/AgenticSys" target="_blank">
-                    <i class="fa-brands fa-square-x-twitter"></i>
-                    here
-                </a>
-                or email ryvisionxyz.contact@gmail.com
-            </div>
-        </div>
-        <footer>
-            <h3>Links :</h3>
-            ryvisionxyz.contact@gmail.com
-            <a href="https://x.com/AgenticSys" target="_blank">
-                <i class="fa-brands fa-square-x-twitter"></i>
-                X
-            </a>
-            <a href="/about" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                About
-            </a>
-            <a href="/privacy-policy" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                Privacy Policy
-            </a>
         </footer>
     </div>
+    <script type="module" src="/src/js/apply-dynamic.js"></script>
 </body>
 
 </html>

@@ -16,77 +16,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RyVision</title>
-    <meta name="description" content="Daily AI-generated webgame.">
+    <meta name="description"
+        content="Play AI-generated games that reset every 2 days. New mini-games created automatically with global leaderboards and weekly RPG updates.">
     <link rel="stylesheet" href="/src/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="prefetch" href="/daily.html">
     <link rel="prefetch" href="/about.html">
     <link rel="canonical" href="https://www.thatonegame.xyz/">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <meta name="keywords"
+        content="AI, AI games, automation, web games, mini games, RPG, gaming, artificial intelligence">
+    <meta name="author" content="RyVision">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#009800">
+    <meta name="language" content="English">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RyVision - AI Generated Games">
+    <meta name="twitter:description" content="Play AI-generated games that reset every 2 days">
+    <meta name="twitter:image" content="https://www.thatonegame.xyz/twitter-image.jpg">
+    <meta name="twitter:site" content="@AgenticSys">
+
+    <meta property="og:title" content="RyVision - AI Generated Games">
+    <meta property="og:description"
+        content="Play AI-generated games that reset every 2 days. New mini-games created automatically with global leaderboards.">
+    <meta property="og:image" content="https://www.thatonegame.xyz/og-image.jpg">
+    <meta property="og:url" content="https://www.thatonegame.xyz">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="RyVision">
 </head>
 
 <body>
-    <div id="content">
-        <header>
-            <div class="content">
-                <h1>RyVision</h1>
-                <p>
-                    Daily AI-generated webgame
-                </p>
-                <nav>
-                    <a href="/" target="">
-                        <i class="fa-solid fa-house"></i>
-                        home
-                    </a>
-                    <a href="/about" target="">
-                        <i class="fa-solid fa-circle-info"></i>
-                        About
-                    </a>
-                    <a href="/gamedev" target="">
-                        <i class="fa-solid fa-gamepad"></i>
-                        GameDev
-                    </a>
-                    <a href="https://x.com/AgenticSys" target="_blank">
-                        <i class="fa-brands fa-square-x-twitter"></i>
-                        X
-                    </a>
+    <div class="page-wrapper">
+        <header class="site-header" style="background-image: url(res/banner.jpg);">
+            <div class="header-container">
+                <img src="favicon.ico" alt="RyVision Logo" class="site-logo">
+                <h1 class="site-title">RyVision</h1>
+                <nav class="main-navigation">
+                    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-toggle">
+                    <label for="mobile-menu-toggle" class="mobile-menu-icon">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+                    <ul class="navigation-menu">
+                        <li>
+                            <a href="/" class="nav-link">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/about" class="nav-link">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/gamedev" class="nav-link">
+                                <i class="fa-solid fa-gamepad"></i>
+                                <span>GameDev</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/AgenticSys" target="_blank" class="nav-link external-link">
+                                <i class="fa-brands fa-square-x-twitter"></i>
+                                <span>X</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
-        <div style="display: flex;flex-direction: column;align-items: center;">
-            <h3>Fully autonomous games that evolve and reset</h3>
-            <h3>Select a game and begin</h3>
-        </div>
-        <div class="grid">
-            <a class="cell" href="/daily" style="background-image: url('res/Grect.jpg');">
-                <span class="label">VOID<br>Resets every 2 days</span>
-            </a>
-            <div id="scoreboard">
+
+        <main class="main-content">
+            <section class="hero-section">
+                <h2 class="hero-subtitle">Fully autonomous games that evolve and reset</h2>
+                <h3 class="hero-cta">Select a game and begin</h3>
+            </section>
+
+            <section class="games-grid">
+                <article class="game-card" id="daily-game"
+                    style="background-image: url(res/Grect.jpg);background-position: center; background-size: cover;">
+                    <a href="/daily" class="game-card-link">
+                        <span class="game-card-label">{GAME_TITLE}<br>Resets every 2 days</span>
+                    </a>
+                </article>
+
+                <aside class="scoreboard-container">
+                    <ul id="game-scoreboard">Scoreboard loading...</ul>
+                </aside>
+
+                <article class="game-card" id="weekly-game"
+                    style="background-image: url(res/rpgRes1.jpeg);background-position: center; background-size: cover;">
+                    <a href="" class="game-card-link">
+                        <span class="game-card-label">{GAME_TITLE}<br>Update weekly</span>
+                    </a>
+                </article>
+
+                <div class="grid-spacer"></div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-content">
+                <h3 class="footer-title">Links:</h3>
+                <div class="footer-links">
+                    <span class="footer-email">ryvisionxyz.contact@gmail.com</span>
+                    <a href="https://x.com/AgenticSys" target="_blank" class="footer-link external-link">
+                        <i class="fa-brands fa-square-x-twitter"></i>
+                        <span>X</span>
+                    </a>
+                    <a href="/about" class="footer-link">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="/privacy-policy" class="footer-link">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Privacy Policy</span>
+                    </a>
+                </div>
             </div>
-            <a class="cell" href="" style="background-image: url('res/rpgRes1.jpeg');">
-                <span class="label">Swords & Shadows<br>Update weekly</span>
-            </a>
-            <div>
-                <p></p>
-            </div>
-        </div>
-        <footer>
-            <h3>Links :</h3>
-            ryvisionxyz.contact@gmail.com
-            <a href="https://x.com/AgenticSys" target="_blank">
-                <i class="fa-brands fa-square-x-twitter"></i>
-                X
-            </a>
-            <a href="/about" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                About
-            </a>
-            <a href="/privacy-policy" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                Privacy Policy
-            </a>
         </footer>
     </div>
     <script type="module" src="/src/js/highscore.js"></script>
+    <script type="module" src="/src/js/apply-dynamic.js"></script>
 </body>
 
 </html>

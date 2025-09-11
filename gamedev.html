@@ -16,228 +16,249 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gamedev RyVision</title>
-    <meta name="description" content="game dev of ryvision.">
+    <meta name="description" content="Technical documentation of RyVision's AI-driven medieval RPG. See how automation creates and evolves game systems weekly.">
     <link rel="stylesheet" href="/src/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="canonical" href="https://www.thatonegame.xyz/gamedev">
 </head>
 
 <body>
-    <div id="content">
-        <header>
-            <div class="content">
-                <h1>RyVision</h1>
-                <p>
-                    Daily AI-generated webgame
-                </p>
-                <nav>
-                    <a href="/" target="">
-                        <i class="fa-solid fa-house"></i>
-                        home
-                    </a>
-                    <a href="/about" target="">
-                        <i class="fa-solid fa-circle-info"></i>
-                        About
-                    </a>
-                    <a href="/gamedev" target="">
-                        <i class="fa-solid fa-gamepad"></i>
-                        GameDev
-                    </a>
-                    <a href="https://x.com/AgenticSys" target="_blank">
-                        <i class="fa-brands fa-square-x-twitter"></i>
-                        X
-                    </a>
+    <div class="page-wrapper">
+        <header class="site-header" style="background-image: url(res/banner.jpg);">
+            <div class="header-container">
+                <img src="favicon.ico" alt="RyVision Logo" class="site-logo">
+                <h1 class="site-title">RyVision</h1>
+                <nav class="main-navigation">
+                    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-toggle">
+                    <label for="mobile-menu-toggle" class="mobile-menu-icon">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+                    <ul class="navigation-menu">
+                        <li>
+                            <a href="/" class="nav-link">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/about" class="nav-link">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <span>About</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/gamedev" class="nav-link nav-link--active">
+                                <i class="fa-solid fa-gamepad"></i>
+                                <span>GameDev</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://x.com/AgenticSys" target="_blank" class="nav-link external-link">
+                                <i class="fa-brands fa-square-x-twitter"></i>
+                                <span>X</span>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </header>
-        <section>
-            <div class="row">
-                <div class="text">
-                    <h2>Game Dev</h2>
-                    <p>
-                        The GameDev section showcases our ongoing AI-driven RPG project. It is an offline, pixelated
-                        medieval
-                        RPG set in a 3D world. The game starts with minimal functionality, giving players a glimpse of
-                        the
-                        world
-                        and basic mechanics. Every week, the AI adds new features, content, or systems, gradually
-                        expanding
-                        the
-                        experience and making the world more complete.<br><br>
 
+        <main class="main-content">
+            <article class="gamedev-section">
+                <div class="gamedev-content">
+                    <h2 class="section-title">Game Dev</h2>
+                    <p class="section-description">
+                        The GameDev section showcases our ongoing AI-driven RPG project. It is an offline, pixelated
+                        medieval RPG set in a 3D world. The game starts with minimal functionality, giving players a glimpse of
+                        the world and basic mechanics. Every week, the AI adds new features, content, or systems, gradually
+                        expanding the experience and making the world more complete.
+                    </p>
+                    <p class="section-description">
                         This page highlights the evolution of the game over time, showing how automation can create,
-                        test,
-                        and
-                        improve complex gameplay without human intervention. Each update reflects the AI’s growing
-                        understanding
-                        of the game world, demonstrating a continuous process of improvement and experimentation.
+                        test, and improve complex gameplay without human intervention. Each update reflects the AI's growing
+                        understanding of the game world, demonstrating a continuous process of improvement and experimentation.
                     </p>
                 </div>
-                <img src="res/rpgRes1.jpeg" alt="">
-            </div>
-            <div class="row">
-                <div class="text">
-                    <h2>1. Medieval 2.5D Game - Technical Documentation</h2>
-                    <h2>Overview</h2>
-                    <p>This prototype implements a 2.5D medieval-themed web game using Three.js (r128) with an
-                        orthographic camera system. The game features WASD movement, camera-attached sword mechanics,
-                        and a parallax background system while maintaining all assets as 2D sprites that always face the
-                        camera.</p>
+                <img src="res/rpgRes1.jpeg" alt="RPG Game Screenshot 1" class="gamedev-image">
+            </article>
 
-                    <h2>Technical Implementation</h2>
+            <article class="gamedev-section">
+                <div class="gamedev-content">
+                    <h2 class="section-title">Medieval 2.5D Game - Technical Documentation</h2>
+                    
+                    <section class="tech-section">
+                        <h3 class="tech-subtitle">Overview</h3>
+                        <p>This prototype implements a 2.5D medieval-themed web game using Three.js (r128) with an
+                            orthographic camera system. The game features WASD movement, camera-attached sword mechanics,
+                            and a parallax background system while maintaining all assets as 2D sprites that always face the
+                            camera.</p>
+                    </section>
 
-                    <h3>Core Architecture</h3>
-                    <ul>
-                        <li><strong>Engine:</strong> Three.js r128 (WebGL renderer)</li>
-                        <li><strong>Camera System:</strong> Orthographic camera (-10 to 10 horizontal, -7.5 to 7.5
-                            vertical)</li>
-                        <li><strong>Rendering:</strong> WebGL with shadow mapping enabled (PCFSoftShadowMap)</li>
-                        <li><strong>Asset Loading:</strong> TextureLoader with nearest-neighbor filtering for
-                            pixel-perfect rendering</li>
-                    </ul>
+                    <section class="tech-section">
+                        <h3 class="tech-subtitle">Technical Implementation</h3>
+                        
+                        <h4 class="tech-subheading">Core Architecture</h4>
+                        <ul class="tech-list">
+                            <li><strong>Engine:</strong> Three.js r128 (WebGL renderer)</li>
+                            <li><strong>Camera System:</strong> Orthographic camera (-10 to 10 horizontal, -7.5 to 7.5
+                                vertical)</li>
+                            <li><strong>Rendering:</strong> WebGL with shadow mapping enabled (PCFSoftShadowMap)</li>
+                            <li><strong>Asset Loading:</strong> TextureLoader with nearest-neighbor filtering for
+                                pixel-perfect rendering</li>
+                        </ul>
 
-                    <h3>Asset Management</h3>
-                    <ul>
-                        <li><strong>Primary Asset:</strong> Sword sprite from OpenGameArt</li>
-                        <li><strong>Fallback System:</strong> Gray placeholder rectangle if texture fails to load</li>
-                        <li><strong>Texture Filtering:</strong> NearestFilter for both magnification and minification to
-                            maintain pixelated aesthetic</li>
-                        <li><strong>Transparency:</strong> AlphaTest set to 0.1 for clean sprite edges</li>
-                    </ul>
+                        <h4 class="tech-subheading">Asset Management</h4>
+                        <ul class="tech-list">
+                            <li><strong>Primary Asset:</strong> Sword sprite from OpenGameArt</li>
+                            <li><strong>Fallback System:</strong> Gray placeholder rectangle if texture fails to load</li>
+                            <li><strong>Texture Filtering:</strong> NearestFilter for both magnification and minification to
+                                maintain pixelated aesthetic</li>
+                            <li><strong>Transparency:</strong> AlphaTest set to 0.1 for clean sprite edges</li>
+                        </ul>
 
-                    <h3>Movement & Camera System</h3>
-                    <div class="code-block">
-                        // Camera acts as the player entity<br>
-                        cameraPosition = { x: 0, y: 2, z: 5 }<br>
-                        playerSpeed = 0.1 // Units per frame
-                    </div>
-                    <ul>
-                        <li>WASD controls move the orthographic camera through 3D space</li>
-                        <li>Camera Y position remains fixed at 2 units for consistent viewpoint</li>
-                        <li>All movement updates trigger parallax recalculation and UI refresh</li>
-                    </ul>
+                        <h4 class="tech-subheading">Movement & Camera System</h4>
+                        <div class="code-block">
+                            // Camera acts as the player entity<br>
+                            cameraPosition = { x: 0, y: 2, z: 5 }<br>
+                            playerSpeed = 0.1 // Units per frame
+                        </div>
+                        <ul class="tech-list">
+                            <li>WASD controls move the orthographic camera through 3D space</li>
+                            <li>Camera Y position remains fixed at 2 units for consistent viewpoint</li>
+                            <li>All movement updates trigger parallax recalculation and UI refresh</li>
+                        </ul>
 
-                    <h3>2.5D Implementation</h3>
-                    <p>All game objects are 2D planes that use <code>lookAt()</code> to face the camera:</p>
-                    <ul>
-                        <li><strong>Trees:</strong> Composed of trunk + crown PlaneGeometry</li>
-                        <li><strong>Sword:</strong> Single plane with texture mapping</li>
-                        <li><strong>Background elements:</strong> Layered planes with varying opacity</li>
-                    </ul>
+                        <h4 class="tech-subheading">2.5D Implementation</h4>
+                        <p>All game objects are 2D planes that use <code>lookAt()</code> to face the camera:</p>
+                        <ul class="tech-list">
+                            <li><strong>Trees:</strong> Composed of trunk + crown PlaneGeometry</li>
+                            <li><strong>Sword:</strong> Single plane with texture mapping</li>
+                            <li><strong>Background elements:</strong> Layered planes with varying opacity</li>
+                        </ul>
 
-                    <h3>Parallax Background System</h3>
-                    <p>Three-layer parallax implementation:</p>
-                    <ul>
-                        <li><strong>Layer 0</strong> (farthest): Z=-20, opacity=0.3, parallax factor=0.1</li>
-                        <li><strong>Layer 1</strong> (middle): Z=-15, opacity=0.4, parallax factor=0.2</li>
-                        <li><strong>Layer 2</strong> (nearest): Z=-10, opacity=0.5, parallax factor=0.3</li>
-                    </ul>
-                    <p>Elements move at different rates based on camera position to create depth illusion.</p>
+                        <h4 class="tech-subheading">Parallax Background System</h4>
+                        <p>Three-layer parallax implementation:</p>
+                        <ul class="tech-list">
+                            <li><strong>Layer 0</strong> (farthest): Z=-20, opacity=0.3, parallax factor=0.1</li>
+                            <li><strong>Layer 1</strong> (middle): Z=-15, opacity=0.4, parallax factor=0.2</li>
+                            <li><strong>Layer 2</strong> (nearest): Z=-10, opacity=0.5, parallax factor=0.3</li>
+                        </ul>
+                        <p>Elements move at different rates based on camera position to create depth illusion.</p>
 
-                    <h3>Lighting System</h3>
-                    <ul>
-                        <li><strong>Ambient Light:</strong> 0.6 intensity for general illumination</li>
-                        <li><strong>Directional Light:</strong> 0.8 intensity, positioned at (5,10,5)</li>
-                        <li><strong>Shadow Mapping:</strong> 1024x1024 resolution, PCF soft shadows</li>
-                    </ul>
+                        <h4 class="tech-subheading">Lighting System</h4>
+                        <ul class="tech-list">
+                            <li><strong>Ambient Light:</strong> 0.6 intensity for general illumination</li>
+                            <li><strong>Directional Light:</strong> 0.8 intensity, positioned at (5,10,5)</li>
+                            <li><strong>Shadow Mapping:</strong> 1024x1024 resolution, PCF soft shadows</li>
+                        </ul>
 
-                    <h3>Performance Optimizations</h3>
-                    <ul>
-                        <li>Static tree generation (12 trees at fixed positions)</li>
-                        <li>Minimal geometry (PlaneGeometry for all sprites)</li>
-                        <li>Efficient sprite rotation using Three.js lookAt()</li>
-                        <li>Delta time-based animation for consistent frame rates</li>
-                    </ul>
+                        <h4 class="tech-subheading">Performance Optimizations</h4>
+                        <ul class="tech-list">
+                            <li>Static tree generation (12 trees at fixed positions)</li>
+                            <li>Minimal geometry (PlaneGeometry for all sprites)</li>
+                            <li>Efficient sprite rotation using Three.js lookAt()</li>
+                            <li>Delta time-based animation for consistent frame rates</li>
+                        </ul>
+                    </section>
 
-                    <h2>Current Issues & Limitations</h2>
+                    <section class="tech-section">
+                        <h3 class="tech-subtitle">Current Issues & Limitations</h3>
+                        
+                        <h4 class="tech-subheading">Technical Challenges</h4>
+                        <ul class="tech-list">
+                            <li><strong>Asset Dependency:</strong> Single external texture creates potential failure point</li>
+                            <li><strong>No Collision Detection:</strong> Camera can move through trees and terrain</li>
+                            <li><strong>Limited Interactions:</strong> No gameplay mechanics beyond movement</li>
+                            <li><strong>Memory Management:</strong> No object pooling or cleanup systems</li>
+                            <li><strong>Mobile Support:</strong> No touch controls implemented</li>
+                        </ul>
 
-                    <h3>Technical Challenges</h3>
-                    <ul>
-                        <li><strong>Asset Dependency:</strong> Single external texture creates potential failure point
-                        </li>
-                        <li><strong>No Collision Detection:</strong> Camera can move through trees and terrain</li>
-                        <li><strong>Limited Interactions:</strong> No gameplay mechanics beyond movement</li>
-                        <li><strong>Memory Management:</strong> No object pooling or cleanup systems</li>
-                        <li><strong>Mobile Support:</strong> No touch controls implemented</li>
-                    </ul>
+                        <h4 class="tech-subheading">Visual Limitations</h4>
+                        <ul class="tech-list">
+                            <li><strong>Basic Sprites:</strong> Trees are simple geometric shapes, not detailed sprites</li>
+                            <li><strong>Static Animation:</strong> Only subtle sword sway, no walking animations</li>
+                            <li><strong>Lighting Mismatch:</strong> 3D lighting on 2D sprites can look inconsistent</li>
+                            <li><strong>Resolution Scaling:</strong> Fixed orthographic bounds may not work on all screens</li>
+                        </ul>
 
-                    <h3>Visual Limitations</h3>
-                    <ul>
-                        <li><strong>Basic Sprites:</strong> Trees are simple geometric shapes, not detailed sprites</li>
-                        <li><strong>Static Animation:</strong> Only subtle sword sway, no walking animations</li>
-                        <li><strong>Lighting Mismatch:</strong> 3D lighting on 2D sprites can look inconsistent</li>
-                        <li><strong>Resolution Scaling:</strong> Fixed orthographic bounds may not work on all screens
-                        </li>
-                    </ul>
+                        <h4 class="tech-subheading">Performance Considerations</h4>
+                        <ul class="tech-list">
+                            <li><strong>Overdraw:</strong> Multiple transparent planes can impact fill rate</li>
+                            <li><strong>Shadow Calculations:</strong> All trees cast shadows, increasing GPU load</li>
+                            <li><strong>Constant Lookups:</strong> Every frame updates all sprite rotations</li>
+                        </ul>
+                    </section>
 
-                    <h3>Performance Considerations</h3>
-                    <ul>
-                        <li><strong>Overdraw:</strong> Multiple transparent planes can impact fill rate</li>
-                        <li><strong>Shadow Calculations:</strong> All trees cast shadows, increasing GPU load</li>
-                        <li><strong>Constant Lookups:</strong> Every frame updates all sprite rotations</li>
-                    </ul>
+                    <section class="tech-section">
+                        <h3 class="tech-subtitle">Resources Used</h3>
+                        
+                        <h4 class="tech-subheading">External Libraries</h4>
+                        <ul class="tech-list">
+                            <li><strong>Three.js r128:</strong> Core 3D engine</li>
+                        </ul>
 
-                    <h2>Resources Used</h2>
+                        <h4 class="tech-subheading">Assets</h4>
+                        <ul class="tech-list">
+                            <li><strong>Sword Sprite:</strong> OpenGameArt sword texture (CC0/Public Domain)</li>
+                            <li><strong>Font:</strong> Courier New (system font for retro aesthetic)</li>
+                            <li><strong>Colors:</strong> Hardcoded hex values for medieval palette</li>
+                        </ul>
 
-                    <h3>External Libraries</h3>
-                    <ul>
-                        <li><strong>Three.js r128:</strong> Core 3D engine</li>
-                    </ul>
+                        <h4 class="tech-subheading">Browser APIs</h4>
+                        <ul class="tech-list">
+                            <li><strong>WebGL:</strong> Hardware-accelerated rendering</li>
+                            <li><strong>RequestAnimationFrame:</strong> Smooth 60fps game loop</li>
+                            <li><strong>KeyboardEvent:</strong> WASD input handling</li>
+                            <li><strong>ResizeObserver:</strong> Responsive canvas sizing</li>
+                        </ul>
+                    </section>
 
-                    <h3>Assets</h3>
-                    <ul>
-                        <li><strong>Sword Sprite:</strong> OpenGameArt sword texture (CC0/Public Domain)</li>
-                        <li><strong>Font:</strong> Courier New (system font for retro aesthetic)</li>
-                        <li><strong>Colors:</strong> Hardcoded hex values for medieval palette</li>
-                    </ul>
+                    <section class="tech-section">
+                        <h3 class="tech-subtitle">Implementation Choices</h3>
+                        
+                        <h4 class="tech-subheading">Orthographic vs Perspective</h4>
+                        <p>Chose orthographic camera to maintain true 2.5D aesthetic without perspective distortion. This
+                            keeps sprite sizes consistent regardless of Z-position.</p>
 
-                    <h3>Browser APIs</h3>
-                    <ul>
-                        <li><strong>WebGL:</strong> Hardware-accelerated rendering</li>
-                        <li><strong>RequestAnimationFrame:</strong> Smooth 60fps game loop</li>
-                        <li><strong>KeyboardEvent:</strong> WASD input handling</li>
-                        <li><strong>ResizeObserver:</strong> Responsive canvas sizing</li>
-                    </ul>
+                        <h4 class="tech-subheading">Sprite Billboard Technique</h4>
+                        <p>Used Three.js <code>lookAt()</code> method to ensure all 2D elements face camera. Alternative
+                            approaches like shader-based billboarding would be more performant but increase complexity.</p>
 
-                    <h2>Implementation Choices</h2>
+                        <h4 class="tech-subheading">Immediate Mode Rendering</h4>
+                        <p>All objects render every frame rather than using scene culling or visibility optimization.
+                            Acceptable for prototype scale but would need optimization for larger worlds.</p>
 
-                    <h3>Orthographic vs Perspective</h3>
-                    <p>Chose orthographic camera to maintain true 2.5D aesthetic without perspective distortion. This
-                        keeps sprite sizes consistent regardless of Z-position.</p>
-
-                    <h3>Sprite Billboard Technique</h3>
-                    <p>Used Three.js <code>lookAt()</code> method to ensure all 2D elements face camera. Alternative
-                        approaches like shader-based billboarding would be more performant but increase complexity.</p>
-
-                    <h3>Immediate Mode Rendering</h3>
-                    <p>All objects render every frame rather than using scene culling or visibility optimization.
-                        Acceptable for prototype scale but would need optimization for larger worlds.</p>
-
-                    <h3>Component Architecture</h3>
-                    <p>Chose monolithic class structure over ECS (Entity-Component-System) for simplicity. Game class
-                        handles all systems directly.</p>
+                        <h4 class="tech-subheading">Component Architecture</h4>
+                        <p>Chose monolithic class structure over ECS (Entity-Component-System) for simplicity. Game class
+                            handles all systems directly.</p>
+                    </section>
                 </div>
-                <img src="res/rpgRes2.jpeg" alt="">
+                <img src="res/rpgRes2.jpeg" alt="RPG Game Screenshot 2" class="gamedev-image">
+            </article>
+        </main>
 
+        <footer class="site-footer">
+            <div class="footer-content">
+                <h3 class="footer-title">Links:</h3>
+                <div class="footer-links">
+                    <span class="footer-email">ryvisionxyz.contact@gmail.com</span>
+                    <a href="https://x.com/AgenticSys" target="_blank" class="footer-link external-link">
+                        <i class="fa-brands fa-square-x-twitter"></i>
+                        <span>X</span>
+                    </a>
+                    <a href="/about" class="footer-link">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>About</span>
+                    </a>
+                    <a href="/privacy-policy" class="footer-link">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Privacy Policy</span>
+                    </a>
+                </div>
             </div>
-        </section>
-        <footer>
-            <h3>Links :</h3>
-            ryvisionxyz.contact@gmail.com
-            <a href="https://x.com/AgenticSys" target="_blank">
-                <i class="fa-brands fa-square-x-twitter"></i>
-                X
-            </a>
-            <a href="/about" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                About
-            </a>
-            <a href="/privacy-policy" target="">
-                <i class="fa-solid fa-circle-info"></i>
-                Privacy Policy
-            </a>
         </footer>
     </div>
+    <script type="module" src="/src/js/apply-dynamic.js"></script>
 </body>
 
 </html>
